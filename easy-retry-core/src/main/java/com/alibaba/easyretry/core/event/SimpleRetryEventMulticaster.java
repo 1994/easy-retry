@@ -3,18 +3,15 @@ package com.alibaba.easyretry.core.event;
 import com.alibaba.easyretry.common.event.RetryEvent;
 import com.alibaba.easyretry.common.event.RetryEventMulticaster;
 import com.alibaba.easyretry.common.event.RetryListener;
-import com.google.common.collect.Lists;
+import java.util.ArrayList;
 import java.util.List;
-import lombok.Setter;
 
 /**
  * @author Created by wuhao on 2021/3/26.
  */
 public class SimpleRetryEventMulticaster implements RetryEventMulticaster {
 
-	@Setter
-	private static List<RetryListener> listenerCaches = Lists.newArrayList();
-
+	private static final List<RetryListener> listenerCaches = new ArrayList<>(16);
 
 	@Override
 	public void register(RetryListener listener) {

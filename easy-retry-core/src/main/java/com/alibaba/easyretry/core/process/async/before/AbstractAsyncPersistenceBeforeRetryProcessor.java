@@ -8,8 +8,8 @@ import com.alibaba.easyretry.common.event.before.PrepSaveBeforeRetryEvent;
 import com.alibaba.easyretry.common.retryer.RetryerInfo;
 import com.alibaba.easyretry.common.serializer.ArgSerializerInfo;
 import com.alibaba.easyretry.core.process.async.AbstractAsyncPersistenceProcessor;
-import com.google.common.collect.Maps;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public abstract class AbstractAsyncPersistenceBeforeRetryProcessor<R> extends
 		retryTask.setGmtCreate(new Date());
 		retryTask.setGmtModified(new Date());
 
-		Map<String, String> extAttrs = Maps.newHashMap();
+		Map<String, String> extAttrs = new HashMap<>(16);
 		if (Objects.nonNull(retryerInfo.getResultPredicate())) {
 			extAttrs.put("resultPredicateSerializer",
 				retryConfiguration.getResultPredicateSerializer()

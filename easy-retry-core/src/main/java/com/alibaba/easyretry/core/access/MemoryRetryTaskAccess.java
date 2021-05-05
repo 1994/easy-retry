@@ -3,9 +3,9 @@ package com.alibaba.easyretry.core.access;
 import com.alibaba.easyretry.common.access.RetryTaskAccess;
 import com.alibaba.easyretry.common.constant.enums.RetryTaskStatusEnum;
 import com.alibaba.easyretry.common.entity.RetryTask;
-import com.google.common.collect.Maps;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class MemoryRetryTaskAccess implements RetryTaskAccess {
 
-	private static final Map<Long, RetryTask> retryTaskMap = Maps.newConcurrentMap();
+	private static final Map<Long, RetryTask> retryTaskMap = new ConcurrentHashMap<>(16);
 
 	private static final AtomicLong atomicLong = new AtomicLong();
 

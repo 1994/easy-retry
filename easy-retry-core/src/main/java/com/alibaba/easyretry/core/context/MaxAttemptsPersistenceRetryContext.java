@@ -10,8 +10,8 @@ import com.alibaba.easyretry.common.serializer.ResultPredicateSerializer;
 import com.alibaba.easyretry.common.serializer.RetryArgSerializer;
 import com.alibaba.easyretry.common.strategy.StopStrategy;
 import com.alibaba.easyretry.common.strategy.WaitStrategy;
-import com.google.common.collect.Maps;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -61,7 +61,7 @@ public class MaxAttemptsPersistenceRetryContext implements RetryContext, RetryLi
 	public void setAttribute(String key, String value) {
 		Map<String, String> extAttrs = retryTask.getExtAttrs();
 		if (Objects.isNull(extAttrs)) {
-			extAttrs = Maps.newHashMap();
+			extAttrs = new HashMap<>(16);
 		}
 		extAttrs.put(key, value);
 	}
