@@ -7,6 +7,8 @@ import java.util.Objects;
  */
 public class RetryIdentify {
 
+	private RetryIdentify(){}
+
 	private static final ThreadLocal<String> RETRY_CONTEXT_THREAD_LOCAL = new ThreadLocal<>();
 
 	private static final String RETRY_FLAG = "RETRY_FLAG";
@@ -16,7 +18,7 @@ public class RetryIdentify {
 	}
 
 	public static void stop() {
-		RETRY_CONTEXT_THREAD_LOCAL.set(null);
+		RETRY_CONTEXT_THREAD_LOCAL.remove();
 	}
 
 	public static boolean isOnRetry() {

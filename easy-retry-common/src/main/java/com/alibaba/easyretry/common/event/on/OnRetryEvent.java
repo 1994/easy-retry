@@ -8,9 +8,9 @@ import com.alibaba.easyretry.common.event.RetryEvent;
  */
 public abstract class OnRetryEvent implements RetryEvent {
 
-	private RetryContext retryContext;
+	private final RetryContext retryContext;
 
-	public OnRetryEvent(RetryContext retryContext) {
+	protected OnRetryEvent(RetryContext retryContext) {
 		this.retryContext = retryContext;
 	}
 

@@ -8,13 +8,13 @@ import com.alibaba.easyretry.common.constant.enums.HandleResultEnum;
 import com.alibaba.easyretry.common.entity.RetryTask;
 import com.alibaba.easyretry.core.context.MaxAttemptsPersistenceRetryContext.RetryContextBuilder;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 
 /**
  * @author Created by wuhao on 2020/11/5.
@@ -40,7 +40,7 @@ public class SimpleRetryContainer implements RetryContainer {
 	@Override
 	public void start() {
 		BlockingQueue<RetryContext> queue = new PriorityBlockingQueue<>(MAX_QUEUE_SIZE);
-		ThreadPoolExecutor retryExecutor =
+		ThreadPoolExecutor threadPoolExecutor =
 			new ThreadPoolExecutor(
 				1,
 				1,
@@ -48,7 +48,7 @@ public class SimpleRetryContainer implements RetryContainer {
 				TimeUnit.MILLISECONDS,
 				new LinkedBlockingQueue<>(),
 				r -> new Thread(r, "retryExecutor-Thread"));
-		retryExecutor.execute(new TaskConsumer(queue));
+		threadPoolExecutor.execute(new TaskConsumer(queue));
 		ThreadPoolExecutor retrySelector =
 			new ThreadPoolExecutor(
 				1,
@@ -151,7 +151,7 @@ public class SimpleRetryContainer implements RetryContainer {
 
 			List<RetryTask> tasks =
 				retryConfiguration.getRetryTaskAccess().listAvailableTasks(lastId);
-			if (CollectionUtils.isEmpty(tasks)) {
+			if (Objects.nonNull(tasks) && !tasks.isEmpty()) {
 				sleepTimes++;
 				return;
 			}

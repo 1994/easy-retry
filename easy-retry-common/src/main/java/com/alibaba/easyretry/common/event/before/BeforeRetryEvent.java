@@ -2,7 +2,7 @@ package com.alibaba.easyretry.common.event.before;
 
 import com.alibaba.easyretry.common.entity.RetryTask;
 import com.alibaba.easyretry.common.event.RetryEvent;
-import com.google.common.collect.Maps;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ public abstract class BeforeRetryEvent implements RetryEvent {
 
 	private RetryTask retryTask;
 
-	public BeforeRetryEvent(RetryTask retryTask) {
+	protected BeforeRetryEvent(RetryTask retryTask) {
 		this.retryTask = retryTask;
 	}
 
@@ -24,7 +24,7 @@ public abstract class BeforeRetryEvent implements RetryEvent {
 	public void setAttribute(String key, String value) {
 		Map<String, String> extAttrs = retryTask.getExtAttrs();
 		if (Objects.isNull(extAttrs)) {
-			extAttrs = Maps.newHashMap();
+			extAttrs = new HashMap<>(16);
 		}
 		extAttrs.put(key, value);
 	}

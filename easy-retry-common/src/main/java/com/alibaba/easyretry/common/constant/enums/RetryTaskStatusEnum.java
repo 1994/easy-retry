@@ -34,11 +34,11 @@ public enum RetryTaskStatusEnum {
 
 	private static final Map<Integer, RetryTaskStatusEnum> MAP =
 		Stream.of(values())
-			.collect(Collectors.toMap(RetryTaskStatusEnum::getCode, (value) -> value));
+			.collect(Collectors.toMap(RetryTaskStatusEnum::getCode, value -> value));
 	@Getter
-	private int code;
+	private final int code;
 	@Getter
-	private String desc;
+	private final String desc;
 
 	RetryTaskStatusEnum(int code, String desc) {
 		this.code = code;
