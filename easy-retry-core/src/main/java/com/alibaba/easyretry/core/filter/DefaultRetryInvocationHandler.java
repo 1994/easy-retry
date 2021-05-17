@@ -30,8 +30,8 @@ public class DefaultRetryInvocationHandler implements RetryInvocationHandler {
 		lastRetryFilter.setNext(identifyRetryFilter);
 		lastRetryFilter = identifyRetryFilter;
 
-		MethodExcuteRetryFilter methodExcuteRetryFilter = new MethodExcuteRetryFilter();
-		lastRetryFilter.setNext(methodExcuteRetryFilter);
+		MethodExecuteRetryFilter methodExecuteRetryFilter = new MethodExecuteRetryFilter();
+		lastRetryFilter.setNext(methodExecuteRetryFilter);
 	}
 
 	@Override

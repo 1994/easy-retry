@@ -1,7 +1,9 @@
 package com.alibaba.easyretry.extension.spring.aop;
 
 import com.alibaba.easyretry.common.AbstractResultPredicate;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
@@ -9,7 +11,9 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 /**
  * @author Created by wuhao on 2021/3/18.
  */
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
 public class SPELResultPredicate<T> extends AbstractResultPredicate<T> {
 
 	private String resultCondition;

@@ -2,7 +2,6 @@ package com.alibaba.easyretry.core.process.async.before;
 
 import com.alibaba.easyretry.common.retryer.RetryerInfo;
 import java.util.Objects;
-import org.apache.commons.lang3.ClassUtils;
 
 /**
  * @author Created by wuhao on 2021/3/19.
@@ -10,7 +9,7 @@ import org.apache.commons.lang3.ClassUtils;
 public class ExceptionPersistenceAsyncBeforeRetryProcessor<R> extends
 	AbstractAsyncPersistenceBeforeRetryProcessor<R> {
 
-	private Throwable throwable;
+	private final Throwable throwable;
 
 	public ExceptionPersistenceAsyncBeforeRetryProcessor(Throwable throwable,
 		RetryerInfo<R> retryerInfo) {
@@ -24,7 +23,9 @@ public class ExceptionPersistenceAsyncBeforeRetryProcessor<R> extends
 		if (Objects.isNull(onException)) {
 			return true;
 		}
-		return ClassUtils.isAssignable(retryerInfo.getOnException(), throwable.getClass());
+//		fixme need test
+		return throwable.getClass().isAssignableFrom(retryerInfo.getOnException());
+//		return ClassUtils.isAssignable(retryerInfo.getOnException(), throwable.getClass());
 	}
 
 	@Override

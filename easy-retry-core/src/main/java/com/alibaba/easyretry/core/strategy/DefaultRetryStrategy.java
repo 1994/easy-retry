@@ -4,9 +4,9 @@ import com.alibaba.easyretry.common.RetryContext;
 import com.alibaba.easyretry.common.strategy.StopStrategy;
 import com.alibaba.easyretry.common.strategy.WaitStrategy;
 import com.alibaba.easyretry.core.context.MaxAttemptsPersistenceRetryContext;
-import com.google.common.collect.Maps;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,8 +15,8 @@ public class DefaultRetryStrategy implements StopStrategy, WaitStrategy {
 
 	private static final Long MAX_INTERNAL_TIME = 15 * 60 * 1000L;
 	private static final Long BASE_INTERNAL_TIME = 5000L;
-	private final Map<String, Long> internalTimeMap = Maps.newConcurrentMap();
-	private final Map<String, Integer> retryTimeMap = Maps.newConcurrentMap();
+	private final Map<String, Long> internalTimeMap = new ConcurrentHashMap<>(10);
+	private final Map<String, Integer> retryTimeMap = new ConcurrentHashMap<>(10);
 
 	@Override
 	public boolean shouldStop(RetryContext context) {

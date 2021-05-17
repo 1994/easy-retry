@@ -13,6 +13,7 @@ import com.alibaba.easyretry.common.resolve.ExecutorSolver;
 import com.alibaba.easyretry.common.serializer.ResultPredicateSerializer;
 import com.alibaba.easyretry.common.strategy.StopStrategy;
 import com.alibaba.easyretry.common.strategy.WaitStrategy;
+import com.alibaba.easyretry.common.util.RetryUtils;
 import com.alibaba.easyretry.core.PersistenceRetryExecutor;
 import com.alibaba.easyretry.core.access.DefaultRetrySerializerAccess;
 import com.alibaba.easyretry.core.container.SimpleRetryContainer;
@@ -25,11 +26,9 @@ import com.alibaba.easyretry.extension.mybatis.dao.RetryTaskDAO;
 import com.alibaba.easyretry.extension.mybatis.dao.RetryTaskDAOImpl;
 import com.alibaba.easyretry.extension.spring.aop.RetryInterceptor;
 import com.alibaba.easyretry.mybatis.conifg.EasyRetryMybatisProperties;
-import com.google.common.collect.Lists;
 import java.util.Map;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.BeansException;
@@ -190,10 +189,8 @@ public class MybatisAutoConfiguration implements ApplicationContextAware,
 	@Override
 	public void afterSingletonsInstantiated() {
 		Map<String, RetryListener> map = applicationContext.getBeansOfType(RetryListener.class);
-		if (MapUtils.isNotEmpty(map)) {
-			SimpleRetryEventMulticaster.setListenerCaches(Lists.newArrayList(map.values()));
-		} else {
-			SimpleRetryEventMulticaster.setListenerCaches(Lists.newArrayList());
+		if (RetryUtils.mapIsNotEmpty(map)) {
+			SimpleRetryEventMulticaster.getListenerCaches().addAll(map.values());
 		}
 	}
 }

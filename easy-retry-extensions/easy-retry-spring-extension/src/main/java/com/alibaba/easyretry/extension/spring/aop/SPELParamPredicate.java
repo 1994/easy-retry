@@ -2,8 +2,8 @@ package com.alibaba.easyretry.extension.spring.aop;
 
 import com.alibaba.easyretry.common.EasyRetryPredicate;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import lombok.Data;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -35,7 +35,7 @@ public class SPELParamPredicate implements EasyRetryPredicate<Object[], String> 
 		ExpressionParser parser = new SpelExpressionParser();
 		StandardEvaluationContext context = new StandardEvaluationContext();
 		String[] paramNameArr = discoverer.getParameterNames(method);
-		if (ArrayUtils.isEmpty(paramNameArr)) {
+		if (Objects.isNull(paramNameArr) || paramNameArr.length == 0) {
 			return null;
 		}
 		for (int i = 0; i < paramNameArr.length; i++) {

@@ -2,10 +2,10 @@ package com.alibaba.easyretry.extension.spring.aop;
 
 import com.alibaba.easyretry.common.RetryConfiguration;
 import com.alibaba.easyretry.common.RetryIdentify;
+import com.alibaba.easyretry.common.util.RetryUtils;
 import com.alibaba.easyretry.core.PersistenceRetryer;
 import com.alibaba.easyretry.core.PersistenceRetryerBuilder;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,7 +35,7 @@ public class RetryInterceptor {
 //			.withOnFailureMethod(retryable.onFailureMethod())
 //			.withNamespace(namespace)
 			.withReThrowException(retryable.reThrowException());
-		if (StringUtils.isNotBlank(retryable.resultCondition())) {
+		if (RetryUtils.isNotEmpty(retryable.resultCondition())) {
 			builder.withResultPredicate(new SPELResultPredicate<>(retryable.resultCondition()));
 		}
 

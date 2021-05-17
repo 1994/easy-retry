@@ -18,7 +18,8 @@
 	<modules>
 		<module>easy-retry-spring-extension</module>
 		<module>easy-retry-mybatis-extension</module>
-	</modules>
+    	<module>easy-retry-serializer-extensions</module>
+  </modules>
 
 	<dependencies>
 	</dependencies>

@@ -5,11 +5,16 @@ import com.alibaba.easyretry.common.event.RetryEventMulticaster;
 import com.alibaba.easyretry.common.event.RetryListener;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Setter;
 
 /**
  * @author Created by wuhao on 2021/3/26.
  */
 public class SimpleRetryEventMulticaster implements RetryEventMulticaster {
+
+	public static List<RetryListener> getListenerCaches() {
+		return listenerCaches;
+	}
 
 	private static final List<RetryListener> listenerCaches = new ArrayList<>(16);
 

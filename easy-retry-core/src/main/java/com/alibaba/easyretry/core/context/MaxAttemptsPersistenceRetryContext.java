@@ -10,6 +10,7 @@ import com.alibaba.easyretry.common.serializer.ResultPredicateSerializer;
 import com.alibaba.easyretry.common.serializer.RetryArgSerializer;
 import com.alibaba.easyretry.common.strategy.StopStrategy;
 import com.alibaba.easyretry.common.strategy.WaitStrategy;
+import com.alibaba.easyretry.common.util.RetryUtils;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 import lombok.Data;
 import lombok.ToString;
-import org.apache.commons.lang3.reflect.MethodUtils;
 
 @Data
 @ToString(callSuper = true)
@@ -91,11 +91,11 @@ public class MaxAttemptsPersistenceRetryContext implements RetryContext, RetryLi
 
 	public static class RetryContextBuilder {
 
-		private MaxAttemptsPersistenceRetryContext retryContext;
+		private final MaxAttemptsPersistenceRetryContext retryContext;
 
-		private RetryConfiguration retryConfiguration;
+		private final RetryConfiguration retryConfiguration;
 
-		private RetryTask retryTask;
+		private final RetryTask retryTask;
 
 		public RetryContextBuilder(RetryConfiguration retryConfiguration, RetryTask retryTask) {
 			retryContext = new MaxAttemptsPersistenceRetryContext();
@@ -110,8 +110,8 @@ public class MaxAttemptsPersistenceRetryContext implements RetryContext, RetryLi
 			Object executor = retryConfiguration.getExecutorSolver()
 				.resolver(retryTask.getExecutorName());
 			Class<?>[] classes = Stream.of(args).map(Object::getClass).toArray(Class[]::new);
-			Method method = MethodUtils
-				.getMatchingMethod(executor.getClass(), retryTask.getExecutorMethodName(), classes);
+			Method method = RetryUtils
+				.findMethod(retryTask.getExecutorMethodName(), executor.getClass(), classes);
 			SimpleMethodInvocation simpleMethodInvocation = new SimpleMethodInvocation(executor,
 				method, args);
 			retryContext.setInvocation(simpleMethodInvocation);

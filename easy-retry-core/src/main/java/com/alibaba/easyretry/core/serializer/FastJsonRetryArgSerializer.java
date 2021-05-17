@@ -4,8 +4,7 @@ import com.alibaba.easyretry.common.serializer.ArgSerializerInfo;
 import com.alibaba.easyretry.common.serializer.RetryArgSerializer;
 import com.alibaba.fastjson.JSON;
 import java.util.stream.Stream;
-import org.apache.commons.lang3.ClassUtils;
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.ClassUtils;
 
 /**
  *
@@ -31,19 +30,21 @@ public class FastJsonRetryArgSerializer implements RetryArgSerializer {
 
 	@Override
 	public ArgSerializerInfo deSerialize(String argsStr) {
-		String[] strs = StringUtils.split(argsStr, SPLIT);
-		Object[] arg = Stream.of(strs)
-			.map((str) -> {
-				String[] inner = str.split(INNER_SPLIT);
-				try {
-					return JSON.parseObject(inner[0], ClassUtils.getClass(inner[1]));
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeException(e);
-				}
-			})
-			.toArray();
-		ArgSerializerInfo argSerializerInfo = new ArgSerializerInfo();
-		argSerializerInfo.setArgs(arg);
-		return argSerializerInfo;
+//		String[] strs = StringUtils.split(argsStr, SPLIT);
+//		Object[] arg = Stream.of(strs)
+//			.map((str) -> {
+//				String[] inner = str.split(INNER_SPLIT);
+//				try {
+//					return JSON.parseObject(inner[0], ClassUtils.getClass(inner[1]));
+//				} catch (ClassNotFoundException e) {
+//					throw new RuntimeException(e);
+//				}
+//			})
+//			.toArray();
+//		ArgSerializerInfo argSerializerInfo = new ArgSerializerInfo();
+//		argSerializerInfo.setArgs(arg);
+//		return argSerializerInfo;
+//		fixme need move
+		return null;
 	}
 }
