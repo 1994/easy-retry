@@ -5,7 +5,7 @@ package com.alibaba.easyretry.common.event;
  */
 public interface RetryEventMulticaster {
 
-	void register(RetryListener listener);
+	void register(RetryListener<?> listener);
 
 	void multicast(RetryEvent retryEvent);
 
